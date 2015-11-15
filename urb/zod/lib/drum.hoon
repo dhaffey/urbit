@@ -352,13 +352,21 @@
   ^+  +>
   =+  lag=se-agon
   ?.  (~(has by fug) gyl)  +>.$
-  =.  fug  (~(del by fug) gyl)
+  =+  ^=  hit
+      ?.  =(gyl [our %dojo])                          ::  undead dojo
+        ~
+      (some hit:(need (~(got by fug) gyl)))
+  =.  fug  ?:  =(gyl [our %dojo-husk])                :: XX hold onto the husk,
+             fug                                      :: se-join will drop it
+           (~(del by fug) gyl)
   =.  eel  ?.(pej eel (~(del in eel) gyl))
-  =.  +>.$  ?.  &(?=(^ lag) !=(gyl u.lag))  
+  =.  +>.$  ?.  &(?=(^ lag) !=(gyl u.lag))
               +>.$(inx 0)
             (se-alas u.lag)
   =.  +>.$  (se-text "[unlinked from {<gyl>}]")
-  ?:  =(gyl [our %dojo])                              ::  undead dojo
+  ?^  hit                                             ::  old dojo history
+    =+  teg=*target
+    =.  fug  (~(put by fug) [our %dojo-husk] `teg(hit u.hit))
     (se-link gyl)
   +>.$
 ::
@@ -383,8 +391,12 @@
   |=  gyl=gill
   ^+  +>
   =.  +>  (se-text "[linked to {<gyl>}]")
+  =+  pop=|*([a=(map) b=* c=*] [(fall (~(get by a) b) c) (~(del by a) b)])
+  =^  teg  fug  ?.  =(gyl [our %dojo])                :: reanimate dojo history
+                  [`*target fug]
+                (pop fug [our %dojo-husk] `*target)
   ?>  =(~ (~(got by fug) gyl))
-  (se-alas(fug (~(put by fug) gyl `*target)) gyl)
+  (se-alas(fug (~(put by fug) gyl teg)) gyl)
 ::
 ++  se-nuke                                           ::  teardown
   |=  gyl=gill
